@@ -1,0 +1,5 @@
+
+<!-- <record model="res.groups" id="user_category">
+    <field name="name" >Utilisateur</field>
+    <field name="implied_ids" eval="[(4,ref()]"></field>
+</record> -->
