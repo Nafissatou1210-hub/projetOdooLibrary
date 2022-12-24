@@ -1,59 +1,48 @@
 <odoo>
-  <record id="view_form_library" model="ir.ui.view">
-    <field name="name">Vue formulaire Library</field>
-    <field name="model">uadb.library</field>
-    <field name="arch" type="xml">
-      <form>
-        <group>
-          <field name="date_pub" />
-          <field name="num_isbn" />
-          <field name="auteur" widget="many2many_tags" />
-        </group>
-      </form>
-    </field>
-  </record>
   
-  <record id="view_list_library" model="ir.ui.view">
-    <field name="name">Vue Liste Bibliothèque</field>
-    <field name="model">uadb.library</field>
+  <record model="ir.ui.view" id="view_form">
+      <field name="name">Book Form View</field>
+      <field name="model">library.library</field>
+      <field name="arch" type="xml">
+        <form string = "Book">
+          <group>
+            <field name="isbn"/>
+            <field name="name"/>
+            <field name="auteur" widget="many2many_tags"/>
+            <field name="publisher"/>
+            <field name="date_pub"/>
+            <field name="image" widget="image"/>
+            <field name="accessible"/>
+          </group>
+        </form>
+      </field>
+  </record>
+    
+  <record model="ir.ui.view" id="view_list">
+    <field name="name">Book List View </field>
+    <field name="model">library.library</field>
     <field name="arch" type="xml">
       <tree>
-        <field name="num_isbn" />
-        <field name="date_pub" />
-        <field name="auteur" widget="many2many_tags" />
+        <field name="name"/>
+        <field name="auteur" widget="many2many_tags"/>
+        <field name="publisher"/>
+        <field name="date_pub"/>
       </tree>
     </field>
   </record>
 
-  <record id="view_kanban_library" model="ir.ui.view">
-    <field name="name">Vue Kanban Bibliothèque</field>
-    <field name="model">uadb.library</field>
+  <record model="ir.ui.view" id="view.search">
+    <field name="name">Book Filters</field>
+    <field name="model">library.library</field>
     <field name="arch" type="xml">
-      <kanban>
-        <field name="num_isbn" />
-        <field name="date_pub" />
-        <field name="auteur" widget="many2many_tags" />
-        <templates>
-          <t t-name="kanban-box">
-            <ul class="list-group">
-              <li class="list-group-item">Date: <field name="date_pub"/></li>
-              <li class="list-group-item">Numero ISBN: <field name="num_isbn"/></li>
-            </ul>
-            <!-- <div t-if="record.num_isbn.value">
-              <t t-esc="record.num_isbn.value"/>
-            </div> -->
-          </t>
-        </templates>
-      </kanban>
+      <search>
+        <field name="publisher"/>
+        <filter name="filter_accessible" string="Accessible"
+        domain="[('accessible','=',False)]"/>
+        <filter name="filter_inaccessible" string="Inaccessible"
+        domain="[('inaccessible','=',True)]"/>
+      </search>
     </field>
   </record>
-
-  <record id="vue_form_library_action" model="ir.actions.act_window">
-    <field name="name">Voir la liste</field>
-    <field name="res_model">uadb.library</field>
-    <field name="view_mode">tree,form,kanban</field>
-  </record>
-
-  <menuitem id="menu_library" name="Formulaire BU" action ="vue_form_library_action" />
 
 </odoo>
